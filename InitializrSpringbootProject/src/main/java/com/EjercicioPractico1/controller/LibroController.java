@@ -9,21 +9,44 @@ import com.EjercicioPractico1.service.LibrosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/libro") // Ruta base para todas las operaciones relacionadas con libros
 public class LibroController {
 
     @Autowired
     private LibrosService librosService;
 
-    @GetMapping("/libros")
-    public String listarLibros(@RequestParam(required = false) String categoria, Model model) {
-        List<Libros> libros;
-        libros = librosService.getLibros();
-        model.addAttribute("libros", libros);
-        return "listadoLibros";
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("libros", librosService.getLibros(null));
+        return "index";
+    }
+
+    @PostMapping("/guardar")
+    public String guardarLibro(@ModelAttribute Libros libro) {
+        librosService.guardarlibro(libro);
+        return "redirect:/libro/libreria";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminarLibro(@PathVariable Long id) {
+        Libros libro = librosService.obtenerLibroPorId(id);
+        if (libro != null) {
+            librosService.eliminarlibro(libro);
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/libreria")
+    public String mostrarLibreria(Model model) {
+        model.addAttribute("libros", librosService.getLibros(null));
+        return "libro/Libreria"; // Ruta de la plantilla relativa a "resources/templates/libro"
+    }
+
+    @GetMapping("/contactenos")
+    public String mostrarFormularioContactenos() {
+        return "libro/Contactenos"; // Ruta de la plantilla relativa a "resources/templates/libro"
     }
 }

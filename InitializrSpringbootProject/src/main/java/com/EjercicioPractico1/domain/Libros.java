@@ -5,29 +5,59 @@
 package com.EjercicioPractico1.domain;
 
 import jakarta.persistence.*;
-import java.io.Serializable;
-import lombok.Data;
 
-@Data
 @Entity
-@Table(name="libros")
-public class Libros implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
-    
+@Table(name = "libros")
+public class Libros {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
     private Long id;
+
     private String titulo;
     private String autor;
+    private double precio;
     private String categoria;
 
-    public Libros() {
+    // Getters y setters
+
+    public Long getId() {
+        return id;
     }
 
-    public Libros(String autor, String categoria) {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
         this.autor = autor;
+    }
+    
+     public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 }

@@ -7,5 +7,8 @@ package com.EjercicioPractico1.dao;
 import com.EjercicioPractico1.domain.Libros;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface LibrosDao extends JpaRepository<Libros, Long> {
+    List<Libros> findByCategoria(String categoria);
 }
